@@ -17,8 +17,8 @@ class App extends Component {
   }
 
   handleClick = () => {
-    this.setState({ timeSinceMount: 0 }); // initialize state
-    clearInterval(this.interval); // clear the intarval timer created by setInterval
+    this.setState({ timeSinceMount: 0 }); // initialize state of our counter
+    clearInterval(this.interval); // clear the interval timer created by setInterval() method
     this.interval = setInterval(() => {
       this.setState((prevState) => ({
         timeSinceMount: prevState.timeSinceMount + 1,

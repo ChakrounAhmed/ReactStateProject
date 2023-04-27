@@ -12,30 +12,22 @@ class App extends Component {
       imgSrc: "/pic.jpg",
       profession: `React js Developer`,
       show: false,
-      elapsedTime: 0,
+      timeSinceMount: 0,
     };
   }
 
   handleClick = () => {
-    this.componentDidMount();
+    this.setState({ timeSinceMount: 0 }); // initialize state
+    clearInterval(this.interval); // clear the intarval timer created by setInterval
+    this.interval = setInterval(() => {
+      this.setState((prevState) => ({
+        timeSinceMount: prevState.timeSinceMount + 1,
+      }));
+    }, 1000);
   };
 
-  componentDidMount() {
-    this.startTime = new Date().getTime();
-
-    // Update elapsed time every second
-    this.intervalId = setInterval(() => {
-      const currentTime = new Date().getTime();
-      const elapsedTimeInSeconds = Math.floor(
-        (currentTime - this.startTime) / 1000
-      );
-      this.setState({ elapsedTime: elapsedTimeInSeconds });
-    }, 1000);
-  }
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
   show = () => {
+    console.log();
     this.setState({ show: !this.state.show });
   };
   render() {
@@ -59,7 +51,7 @@ class App extends Component {
         >
           showMe!
         </button>
-        <p>{this.state.elapsedTime} seconds</p>
+        <p>{this.state.timeSinceMount} seconds</p>
       </div>
     );
   }
